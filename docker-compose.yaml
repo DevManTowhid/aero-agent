@@ -1,0 +1,21 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  db:
+    # We use Alpine Linux because it is incredibly lightweight and secure
+    image: postgres:15-alpine
+    container_name: aero_rag_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234  # This must match your backend/.env file
+      POSTGRES_DB: aero_rag_db         # This must match your backend/.env file
+    ports:
+      - "5432:5432"
+    volumes:
+      # This ensures your database data survives even if the container is destroyed
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
