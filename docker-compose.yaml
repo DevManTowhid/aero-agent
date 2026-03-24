@@ -17,5 +17,17 @@ services:
       # This ensures your database data survives even if the container is destroyed
       - postgres_data:/var/lib/postgresql/data
 
+# --- Your Vector Database ---
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: aero_vector_db
+    restart: always
+    ports:
+      - "6333:6333" # REST API (for checking status)
+      - "6334:6334" # gRPC (for high-speed Python communication)
+    volumes:
+      - qdrant_data:/qdrant/storage
+
 volumes:
   postgres_data:
+  qdrant_data:
